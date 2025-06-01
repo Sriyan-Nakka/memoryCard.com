@@ -89,6 +89,8 @@
         border: none;
         padding: 4px;
         transition: all 0.2s ease-in-out;
+        font-family: bodyFont, sans-serif;
+        font-weight: bold;
       }
 
       @media (pointer: fine) and (min-width: 1024px) {
@@ -97,15 +99,18 @@
           text-decoration-color: white;
           text-decoration-thickness: 3px;
         }
-        #playButton:hover {
+        button:hover {
           transform: scale(1.2);
+          color: hsl(0, 0%, 95%);
+        }
+        #playButton:hover {
           background-color: green;
+        }
+        #resetButton:hover {
+          background-color: darkred;
         }
         .card {
           flex: 0 0 20%;
-          box-sizing: border-box;
-          width: 120px;
-          height: 170px;
         }
       }
 
@@ -127,6 +132,12 @@
         font-weight: bold;
         margin-top: 5px;
       }
+      #resetButton {
+        background-color: hsl(0, 95%, 45%);
+      }
+      #resetBtnPara {
+        margin-top: 0px;
+      }
 
       #cards {
         display: flex;
@@ -136,7 +147,7 @@
         height: auto;
         user-select: none;
         margin-top: 15px;
-        margin-bottom: 25px;
+        margin-bottom: 10px;
         justify-content: center;
       }
       .card {
@@ -144,8 +155,8 @@
         transform-style: preserve-3d;
         transition: all 0.7s;
         cursor: pointer;
-        width: 135px;
-        height: 190px;
+        width: 100px;
+        height: 120px;
       }
 
       .front,
@@ -159,6 +170,7 @@
         justify-content: center;
         align-items: center;
         color: black;
+        box-sizing: border-box;
       }
       .front {
         background: var(--card-front);
@@ -176,10 +188,14 @@
       .diamond,
       .pentagon,
       .hexagon {
-        transform: scale(4.5);
+        transform: scale(3.5);
       }
-      .square {
-        transform: scale(0.9);
+      .square,
+      .circle {
+        transform: scale(0.75);
+      }
+      .backQM {
+        transform: scale(0.8);
       }
     </style>
   </head>
@@ -204,7 +220,12 @@
     </header>
     <hr />
     <main>
-      <button id="playButton">Play</button>
+      <button
+        id="playButton"
+        onclick="document.querySelector('#cards').style.display = 'flex'; document.querySelector('#playButton').style.display = 'none'; cardFlip = 0;"
+      >
+        Play
+      </button>
       <div id="cards">
         <!-- circle -->
         <div class="card" data-shape="circle">
@@ -212,7 +233,7 @@
             <img src="images/circle.svg" alt="Circle" class="circle" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
 
@@ -221,7 +242,7 @@
             <img src="images/circle.svg" alt="Circle" class="circle" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
         <!-- triangle -->
@@ -230,7 +251,7 @@
             <img src="images/triangle.svg" alt="Triangle" class="triangle" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
 
@@ -239,7 +260,7 @@
             <img src="images/triangle.svg" alt="Triangle" class="triangle" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
         <!-- diamond -->
@@ -248,7 +269,7 @@
             <img src="images/diamond.svg" alt="Triangle" class="diamond" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
 
@@ -257,7 +278,7 @@
             <img src="images/diamond.svg" alt="Triangle" class="diamond" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
         <!-- square -->
@@ -266,7 +287,7 @@
             <img src="images/sqaure.svg" alt="Triangle" class="square" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
 
@@ -275,7 +296,7 @@
             <img src="images/sqaure.svg" alt="Triangle" class="square" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
         <!-- pentagon -->
@@ -284,7 +305,7 @@
             <img src="images/pentagon.svg" alt="Triangle" class="pentagon" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
 
@@ -293,7 +314,7 @@
             <img src="images/pentagon.svg" alt="Triangle" class="pentagon" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
         <!-- hexagon -->
@@ -302,7 +323,7 @@
             <img src="images/hexagon.svg" alt="Triangle" class="hexagon" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
 
@@ -311,10 +332,15 @@
             <img src="images/hexagon.svg" alt="Triangle" class="hexagon" />
           </div>
           <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" />
+            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
           </div>
         </div>
       </div>
+      <p id="resetBtnPara"><button id="resetButton">Reset</button></p>
+
+      <!-- todo: finish writing dialogs -->
+      <dialog id="matchedPair"></dialog>
+      <dialog id="unmatchedPair"></dialog>
     </main>
     <hr id="footerHr" />
     <footer>
@@ -345,7 +371,7 @@
         </a>
         <br />
         &copy; Copyright, Sai Sriyan Nakka 2025, All Rights Reserved.
-        <br />Version 0.4 <br />
+        <br />Version 0.49 <br />
       </center>
     </footer>
   </body>
