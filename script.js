@@ -9,6 +9,7 @@ let pickedCard2;
 const pairsSpan = document.querySelector("#pairsSpan");
 const matchedDialog = document.querySelector("#matchedPair");
 const unmatchedDialog = document.querySelector("#unmatchedPair");
+const winDialog = document.querySelector("#winDialog");
 
 //cardOrder array Shuffle
 for (let rep = 1; rep <= 20; rep++) {
@@ -20,6 +21,10 @@ for (let rep = 1; rep <= 20; rep++) {
   cardOrder[b] = temp;
 }
 console.log(cardOrder);
+
+for (let i = 1; i <= cardOrder.length; i++) {
+  document.getElementById(`card${i}`).style.order = cardOrder[i - 1];
+}
 
 function resetFlip() {
   cardFlip = 0;
@@ -60,11 +65,9 @@ document.querySelectorAll(".card").forEach((card) => {
     cardFlip++;
     if (cardFlip === 1) {
       pickedCard1 = card;
-      console.log(pickedCard1);
       shape1 = card.dataset.shape;
     } else if (cardFlip === 2) {
       pickedCard2 = card;
-      console.log(pickedCard2);
       shape2 = card.dataset.shape;
       document.querySelectorAll(".card").forEach((card) => {
         card.style.pointerEvents = "none";
@@ -74,8 +77,13 @@ document.querySelectorAll(".card").forEach((card) => {
         if (shape1 === shape2) {
           foundPairs++;
           pairsSpan.textContent = foundPairs;
-          matchedDialog.showModal();
+          if (foundPairs === 6) {
+          } else {
+            matchedDialog.showModal();
+          }
           closeOpenCards();
+
+          checkWin();
         } else {
           closeOpenCards();
           unmatchedDialog.showModal();
@@ -90,23 +98,35 @@ document.querySelectorAll(".card").forEach((card) => {
       }, 250);
     }
   });
-  checkWin();
 });
 
 document.querySelectorAll(".closeModal").forEach((button) => {
   button.onclick = () => {
     matchedPair.close();
     unmatchedPair.close();
+    winDialog.close();
     cardFlip = 0;
     shape1 = "";
     shape2 = "";
     document.querySelectorAll(".card").forEach((card) => {
       card.style.pointerEvents = "auto";
     });
-    resetFlip();
+    if (foundPairs === 6) {
+      document.querySelector("#gameContainer").style.display = "none";
+      document.querySelector("#playButton").style.display = "inline-block";
+    }
   };
 });
 
 function checkWin() {
-  //todo: write win checking function.
+  if (foundPairs === 6) {
+    document.querySelector("#gameContainer").style.display = "none";
+    console.log("Win! Found all pairs...");
+    winDialog.showModal();
+    document.querySelectorAll(".card").forEach((card) => {
+      card.style.visibility = "visible";
+    });
+  } else {
+    console.log("Not win yet...");
+  }
 }

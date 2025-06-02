@@ -161,8 +161,8 @@
         transform-style: preserve-3d;
         transition: all 0.7s;
         cursor: pointer;
-        width: 100px;
-        height: 120px;
+        width: 105px;
+        height: 140px;
       }
 
       .front,
@@ -245,7 +245,7 @@
       <div id="gameContainer">
         <div id="cards">
           <!-- circle -->
-          <div class="card" data-shape="circle">
+          <div class="card" id="card1" data-shape="circle">
             <div class="front">
               <img src="images/circle.svg" alt="Circle" class="circle" />
             </div>
@@ -258,7 +258,7 @@
             </div>
           </div>
 
-          <div class="card" data-shape="circle">
+          <div class="card" id="card2" data-shape="circle">
             <div class="front">
               <img src="images/circle.svg" alt="Circle" class="circle" />
             </div>
@@ -271,7 +271,7 @@
             </div>
           </div>
           <!-- triangle -->
-          <div class="card" data-shape="triangle">
+          <div class="card" id="card3" data-shape="triangle">
             <div class="front">
               <img src="images/triangle.svg" alt="Triangle" class="triangle" />
             </div>
@@ -284,7 +284,7 @@
             </div>
           </div>
 
-          <div class="card" data-shape="triangle">
+          <div class="card" id="card4" data-shape="triangle">
             <div class="front">
               <img src="images/triangle.svg" alt="Triangle" class="triangle" />
             </div>
@@ -297,7 +297,7 @@
             </div>
           </div>
           <!-- diamond -->
-          <div class="card" data-shape="diamond">
+          <div class="card" id="card5" data-shape="diamond">
             <div class="front">
               <img src="images/diamond.svg" alt="Triangle" class="diamond" />
             </div>
@@ -310,7 +310,7 @@
             </div>
           </div>
 
-          <div class="card" data-shape="diamond">
+          <div class="card" id="card6" data-shape="diamond">
             <div class="front">
               <img src="images/diamond.svg" alt="Triangle" class="diamond" />
             </div>
@@ -323,7 +323,7 @@
             </div>
           </div>
           <!-- square -->
-          <div class="card" data-shape="square">
+          <div class="card" id="card7" data-shape="square">
             <div class="front">
               <img src="images/sqaure.svg" alt="Triangle" class="square" />
             </div>
@@ -336,7 +336,7 @@
             </div>
           </div>
 
-          <div class="card" data-shape="square">
+          <div class="card" id="card8" data-shape="square">
             <div class="front">
               <img src="images/sqaure.svg" alt="Triangle" class="square" />
             </div>
@@ -349,7 +349,7 @@
             </div>
           </div>
           <!-- pentagon -->
-          <div class="card" data-shape="pentagon">
+          <div class="card" id="card9" data-shape="pentagon">
             <div class="front">
               <img src="images/pentagon.svg" alt="Triangle" class="pentagon" />
             </div>
@@ -362,7 +362,7 @@
             </div>
           </div>
 
-          <div class="card" data-shape="pentagon">
+          <div class="card" id="card10" data-shape="pentagon">
             <div class="front">
               <img src="images/pentagon.svg" alt="Triangle" class="pentagon" />
             </div>
@@ -375,7 +375,7 @@
             </div>
           </div>
           <!-- hexagon -->
-          <div class="card" data-shape="hexagon">
+          <div class="card" id="card11" data-shape="hexagon">
             <div class="front">
               <img src="images/hexagon.svg" alt="Triangle" class="hexagon" />
             </div>
@@ -388,7 +388,7 @@
             </div>
           </div>
 
-          <div class="card" data-shape="hexagon">
+          <div class="card" id="card12" data-shape="hexagon">
             <div class="front">
               <img src="images/hexagon.svg" alt="Triangle" class="hexagon" />
             </div>
@@ -406,6 +406,8 @@
           <button id="resetButton" onclick="resetGame()">Reset</button>
         </p>
       </div>
+
+      <!-- dialogs -->
       <dialog id="matchedPair">
         <p class="modalPara">Your selected cards were a matching pair!</p>
         <p class="modalPara"><button class="closeModal">Continue</button></p>
@@ -414,6 +416,11 @@
       <dialog id="unmatchedPair">
         <p class="modalPara">Your selected cards were not a matching pair...</p>
         <p class="modalPara"><button class="closeModal">Continue</button></p>
+      </dialog>
+
+      <dialog id="winDialog">
+        <p>Congratulations, You found all the pairs!</p>
+        <p><button class="closeModal">Continue</button></p>
       </dialog>
     </main>
     <hr id="footerHr" />
@@ -445,7 +452,7 @@
         </a>
         <br />
         &copy; Copyright, Sai Sriyan Nakka 2025, All Rights Reserved.
-        <br />Version 0.75 <br />
+        <br />Version 1.0 <br />
       </center>
     </footer>
   </body>
