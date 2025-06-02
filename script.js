@@ -3,6 +3,8 @@ let cardFlip = 0;
 let foundPairs = 0;
 let shape1 = "";
 let shape2 = "";
+let pickedCard1;
+let pickedCard2;
 
 const pairsSpan = document.querySelector("#pairsSpan");
 const matchedDialog = document.querySelector("#matchedPair");
@@ -19,34 +21,8 @@ for (let rep = 1; rep <= 20; rep++) {
 }
 console.log(cardOrder);
 
-function playFunction() {
-  document.querySelectorAll(".card").forEach((card) => {
-    card.addEventListener("click", () => {
-      card.classList.toggle("cardReveal");
-      card.style.pointerEvents = "none";
-      console.log(card.dataset.shape);
-      cardFlip++;
-      if (cardFlip === 1) {
-        shape1 = card.dataset.shape;
-      } else if (cardFlip === 2) {
-        shape2 = card.dataset.shape;
-        document.querySelectorAll(".card").forEach((card) => {
-          card.style.pointerEvents = "none";
-        });
-        setTimeout(() => {
-          if (shape1 === shape2) {
-            foundPairs++;
-            pairsSpan.textContent = foundPairs;
-            closeOpenCards();
-            matchedDialog.showModal();
-          } else {
-            closeOpenCards();
-            unmatchedDialog.showModal();
-          }
-        }, 1000);
-      }
-    });
-  });
+function resetFlip() {
+  cardFlip = 0;
 }
 
 function closeOpenCards() {
@@ -59,28 +35,78 @@ function playGame() {
   document.querySelector("#playButton").style.display = "none";
   cardFlip = 0;
   foundPairs = 0;
+  shape1 = "";
+  shape2 = "";
   pairsSpan.textContent = foundPairs;
-  playFunction();
+  resetFlip();
 }
 
 function resetGame() {
   closeOpenCards();
-  cardFlip = 0;
+  resetFlip();
   foundPairs = 0;
   pairsSpan.textContent = foundPairs;
   document.querySelectorAll(".card").forEach((card) => {
-    card.style.pointerEvents = "auto";
+    card.style.pointerEvents = "all";
+    card.style.visibility = "visible";
   });
-  playFunction();
 }
+
+document.querySelectorAll(".card").forEach((card) => {
+  card.addEventListener("click", () => {
+    card.classList.toggle("cardReveal");
+    card.style.pointerEvents = "none";
+    console.log(card.dataset.shape);
+    cardFlip++;
+    if (cardFlip === 1) {
+      pickedCard1 = card;
+      console.log(pickedCard1);
+      shape1 = card.dataset.shape;
+    } else if (cardFlip === 2) {
+      pickedCard2 = card;
+      console.log(pickedCard2);
+      shape2 = card.dataset.shape;
+      document.querySelectorAll(".card").forEach((card) => {
+        card.style.pointerEvents = "none";
+      });
+      //pair matched dialog timeout function
+      setTimeout(() => {
+        if (shape1 === shape2) {
+          foundPairs++;
+          pairsSpan.textContent = foundPairs;
+          matchedDialog.showModal();
+          closeOpenCards();
+        } else {
+          closeOpenCards();
+          unmatchedDialog.showModal();
+        }
+      }, 1000);
+      //matched pair cards hiding timeout function
+      setTimeout(() => {
+        if (shape1 === shape2) {
+          pickedCard1.style.visibility = "hidden";
+          pickedCard2.style.visibility = "hidden";
+        }
+      }, 250);
+    }
+  });
+  checkWin();
+});
 
 document.querySelectorAll(".closeModal").forEach((button) => {
   button.onclick = () => {
     matchedPair.close();
     unmatchedPair.close();
+    cardFlip = 0;
+    shape1 = "";
+    shape2 = "";
     document.querySelectorAll(".card").forEach((card) => {
       card.style.pointerEvents = "auto";
-      playFunction();
     });
+    resetFlip();
   };
 });
+
+function checkWin() {
+  //todo: write win checking function.
+}
