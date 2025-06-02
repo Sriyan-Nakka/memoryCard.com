@@ -72,10 +72,13 @@
         font-weight: normal;
         display: inline-block;
         margin-bottom: 5px;
+        color: gray;
       }
       header span.mainHeader {
         text-decoration: underline;
         text-decoration-thickness: 3px;
+        text-decoration-color: hsl(0, 0%, 70%);
+        color: white;
       }
       header summary {
         transition: all 0.25s ease-in-out;
@@ -111,6 +114,9 @@
         }
         .card {
           flex: 0 0 20%;
+        }
+        dialog button:hover {
+          background-color: gray;
         }
       }
 
@@ -197,6 +203,19 @@
       .backQM {
         transform: scale(0.8);
       }
+      #pairsSpan {
+        font-weight: bold;
+      }
+      dialog {
+        background-color: hsl(0, 0%, 20%);
+        color: whitesmoke;
+      }
+      dialog button {
+        border: 1px solid white;
+      }
+      #gameContainer {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -220,127 +239,180 @@
     </header>
     <hr />
     <main>
-      <button
-        id="playButton"
-        onclick="document.querySelector('#cards').style.display = 'flex'; document.querySelector('#playButton').style.display = 'none'; cardFlip = 0;"
-      >
-        Play
-      </button>
-      <div id="cards">
-        <!-- circle -->
-        <div class="card" data-shape="circle">
-          <div class="front">
-            <img src="images/circle.svg" alt="Circle" class="circle" />
+      <button id="playButton" onclick="playGame()">Play</button>
+      <div id="gameContainer">
+        <div id="cards">
+          <!-- circle -->
+          <div class="card" data-shape="circle">
+            <div class="front">
+              <img src="images/circle.svg" alt="Circle" class="circle" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
-          </div>
-        </div>
 
-        <div class="card" data-shape="circle">
-          <div class="front">
-            <img src="images/circle.svg" alt="Circle" class="circle" />
+          <div class="card" data-shape="circle">
+            <div class="front">
+              <img src="images/circle.svg" alt="Circle" class="circle" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
+          <!-- triangle -->
+          <div class="card" data-shape="triangle">
+            <div class="front">
+              <img src="images/triangle.svg" alt="Triangle" class="triangle" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-        </div>
-        <!-- triangle -->
-        <div class="card" data-shape="triangle">
-          <div class="front">
-            <img src="images/triangle.svg" alt="Triangle" class="triangle" />
-          </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
-          </div>
-        </div>
 
-        <div class="card" data-shape="triangle">
-          <div class="front">
-            <img src="images/triangle.svg" alt="Triangle" class="triangle" />
+          <div class="card" data-shape="triangle">
+            <div class="front">
+              <img src="images/triangle.svg" alt="Triangle" class="triangle" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
+          <!-- diamond -->
+          <div class="card" data-shape="diamond">
+            <div class="front">
+              <img src="images/diamond.svg" alt="Triangle" class="diamond" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-        </div>
-        <!-- diamond -->
-        <div class="card" data-shape="diamond">
-          <div class="front">
-            <img src="images/diamond.svg" alt="Triangle" class="diamond" />
-          </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
-          </div>
-        </div>
 
-        <div class="card" data-shape="diamond">
-          <div class="front">
-            <img src="images/diamond.svg" alt="Triangle" class="diamond" />
+          <div class="card" data-shape="diamond">
+            <div class="front">
+              <img src="images/diamond.svg" alt="Triangle" class="diamond" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
+          <!-- square -->
+          <div class="card" data-shape="square">
+            <div class="front">
+              <img src="images/sqaure.svg" alt="Triangle" class="square" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-        </div>
-        <!-- square -->
-        <div class="card" data-shape="square">
-          <div class="front">
-            <img src="images/sqaure.svg" alt="Triangle" class="square" />
-          </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
-          </div>
-        </div>
 
-        <div class="card" data-shape="square">
-          <div class="front">
-            <img src="images/sqaure.svg" alt="Triangle" class="square" />
+          <div class="card" data-shape="square">
+            <div class="front">
+              <img src="images/sqaure.svg" alt="Triangle" class="square" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
+          <!-- pentagon -->
+          <div class="card" data-shape="pentagon">
+            <div class="front">
+              <img src="images/pentagon.svg" alt="Triangle" class="pentagon" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-        </div>
-        <!-- pentagon -->
-        <div class="card" data-shape="pentagon">
-          <div class="front">
-            <img src="images/pentagon.svg" alt="Triangle" class="pentagon" />
-          </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
-          </div>
-        </div>
 
-        <div class="card" data-shape="pentagon">
-          <div class="front">
-            <img src="images/pentagon.svg" alt="Triangle" class="pentagon" />
+          <div class="card" data-shape="pentagon">
+            <div class="front">
+              <img src="images/pentagon.svg" alt="Triangle" class="pentagon" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
+          <!-- hexagon -->
+          <div class="card" data-shape="hexagon">
+            <div class="front">
+              <img src="images/hexagon.svg" alt="Triangle" class="hexagon" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
-        </div>
-        <!-- hexagon -->
-        <div class="card" data-shape="hexagon">
-          <div class="front">
-            <img src="images/hexagon.svg" alt="Triangle" class="hexagon" />
-          </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
-          </div>
-        </div>
 
-        <div class="card" data-shape="hexagon">
-          <div class="front">
-            <img src="images/hexagon.svg" alt="Triangle" class="hexagon" />
-          </div>
-          <div class="back">
-            <img src="images/backCard.svg" alt="Question Mark" class="backQM" />
+          <div class="card" data-shape="hexagon">
+            <div class="front">
+              <img src="images/hexagon.svg" alt="Triangle" class="hexagon" />
+            </div>
+            <div class="back">
+              <img
+                src="images/backCard.svg"
+                alt="Question Mark"
+                class="backQM"
+              />
+            </div>
           </div>
         </div>
+        <p id="foundPairsPara">Found Pairs: <span id="pairsSpan">0</span>/6</p>
+        <p id="resetBtnPara">
+          <button id="resetButton" onclick="resetGame()">Reset</button>
+        </p>
       </div>
-      <p id="resetBtnPara"><button id="resetButton">Reset</button></p>
+      <dialog id="matchedPair">
+        <p class="modalPara">Your selected cards were a matching pair!</p>
+        <p class="modalPara"><button class="closeModal">Continue</button></p>
+      </dialog>
 
-      <!-- todo: finish writing dialogs -->
-      <dialog id="matchedPair"></dialog>
-      <dialog id="unmatchedPair"></dialog>
+      <dialog id="unmatchedPair">
+        <p class="modalPara">Your selected cards were not a matching pair...</p>
+        <p class="modalPara"><button class="closeModal">Continue</button></p>
+      </dialog>
     </main>
     <hr id="footerHr" />
     <footer>
@@ -371,7 +443,7 @@
         </a>
         <br />
         &copy; Copyright, Sai Sriyan Nakka 2025, All Rights Reserved.
-        <br />Version 0.49 <br />
+        <br />Version 0.6 <br />
       </center>
     </footer>
   </body>
