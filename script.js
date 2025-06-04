@@ -5,25 +5,27 @@ let shape1 = "";
 let shape2 = "";
 let pickedCard1;
 let pickedCard2;
+let playMode = "";
 
 const pairsSpan = document.querySelector("#pairsSpan");
 const matchedDialog = document.querySelector("#matchedPair");
 const unmatchedDialog = document.querySelector("#unmatchedPair");
 const winDialog = document.querySelector("#winDialog");
 
-//cardOrder array Shuffle
-for (let rep = 1; rep <= 20; rep++) {
-  let a = Math.floor(Math.random() * cardOrder.length);
-  let b = Math.floor(Math.random() * cardOrder.length);
+function cardOrderShuffle() {
+  for (let rep = 1; rep <= 20; rep++) {
+    let a = Math.floor(Math.random() * cardOrder.length);
+    let b = Math.floor(Math.random() * cardOrder.length);
 
-  let temp = cardOrder[a];
-  cardOrder[a] = cardOrder[b];
-  cardOrder[b] = temp;
-}
-console.log(cardOrder);
+    let temp = cardOrder[a];
+    cardOrder[a] = cardOrder[b];
+    cardOrder[b] = temp;
+  }
+  console.log(cardOrder);
 
-for (let i = 1; i <= cardOrder.length; i++) {
-  document.getElementById(`card${i}`).style.order = cardOrder[i - 1];
+  for (let i = 1; i <= cardOrder.length; i++) {
+    document.getElementById(`card${i}`).style.order = cardOrder[i - 1];
+  }
 }
 
 function resetFlip() {
@@ -35,15 +37,22 @@ function closeOpenCards() {
     card.classList.remove("cardReveal");
   });
 }
-function playGame() {
+
+function closeModeButtons() {
+  //todo: write this function
+}
+
+function playGame(mode) {
+  cardOrderShuffle();
+  closeModeButtons();
   document.querySelector("#gameContainer").style.display = "block";
-  document.querySelector("#playButton").style.display = "none";
   cardFlip = 0;
   foundPairs = 0;
   shape1 = "";
   shape2 = "";
   pairsSpan.textContent = foundPairs;
-  resetFlip();
+  playMode = mode;
+  console.log(playMode);
 }
 
 function resetGame() {
