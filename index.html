@@ -104,10 +104,16 @@
         }
         button:hover {
           transform: scale(1.2);
-          color: hsl(0, 0%, 95%);
+          color: white;
+          border: 1px solid white;
         }
-        #playButton:hover {
-          background-color: green;
+        #playMultiplayer:hover {
+          background-color: hsl(0, 100%, 40%);
+          color: hsl(0, 0%, 87%);
+        }
+        #playSingleplayer:hover {
+          background-color: hsl(240, 100%, 40%);
+          color: hsl(0, 0%, 87%);
         }
         #resetButton:hover {
           background-color: darkred;
@@ -132,17 +138,28 @@
       hr {
         margin-bottom: 5px;
       }
-      #playButton {
-        background-color: greenyellow;
+      #playSingleplayer,
+      #playMultiplayer {
         font-family: bodyFont, sans-serif;
         font-weight: bold;
         margin-top: 5px;
+        color: white;
+        transition: all 0.15s ease-in-out;
+      }
+      #playSingleplayer {
+        background-color: hsl(240, 100%, 33%);
+      }
+      #playMultiplayer {
+        background-color: hsl(0, 100%, 33%);
       }
       #resetButton {
         background-color: hsl(0, 95%, 45%);
       }
       #resetBtnPara {
         margin-top: 0px;
+      }
+      .modePara {
+        margin: 10px;
       }
 
       #cards {
@@ -241,12 +258,17 @@
     </header>
     <hr />
     <main>
-      <button id="playSingleplayer" onclick="playGame('singleplayer')">
-        Play Singleplayer
-      </button>
-      <button id="playMultiplayer" onclick="playGame('multiplayer')">
-        Play Multiplayer
-      </button>
+      <p class="modePara">
+        <button id="playSingleplayer" onclick="playGame('singleplayer')">
+          Play Singleplayer
+        </button>
+      </p>
+      <p class="modePara">
+        <button id="playMultiplayer" onclick="playGame('multiplayer')">
+          Play Multiplayer
+        </button>
+      </p>
+
       <div id="gameContainer">
         <div id="cards">
           <!-- circle -->
@@ -423,8 +445,32 @@
         <p class="modalPara"><button class="closeModal">Continue</button></p>
       </dialog>
 
-      <dialog id="winDialog">
+      <dialog id="matchedPairMultiplayer">
+        <p class="modalPara">
+          <span id="matchedPlayerName">player1</span>'s selected cards were a
+          matching pair!
+        </p>
+        <p class="modalPara"><button class="closeModal">Continue</button></p>
+      </dialog>
+
+      <dialog id="unmatchedPairMultiplayer">
+        <p class="modalPara">
+          <span id="unmatchedPlayerName">player1</span>'s selected cards were
+          not a matching pair...
+        </p>
+        <p class="modalPara"><button class="closeModal">Continue</button></p>
+      </dialog>
+
+      <dialog id="winDialogSingleplayer">
         <p>Congratulations, You found all the pairs!</p>
+        <p><button class="closeModal">Continue</button></p>
+      </dialog>
+
+      <dialog id="winDialogMultiplayer">
+        <p>
+          Congratulations, <span id="winnerName">player</span> found the most
+          pairs!
+        </p>
         <p><button class="closeModal">Continue</button></p>
       </dialog>
     </main>
@@ -457,7 +503,7 @@
         </a>
         <br />
         &copy; Copyright, Sai Sriyan Nakka 2025, All Rights Reserved.
-        <br />Version 1.02 <br />
+        <br />Version 1.04 <br />
       </center>
     </footer>
   </body>

@@ -7,10 +7,30 @@ let pickedCard1;
 let pickedCard2;
 let playMode = "";
 
+let p1Card1;
+let p1Card2;
+let p2Card1;
+let p2Card2;
+
 const pairsSpan = document.querySelector("#pairsSpan");
-const matchedDialog = document.querySelector("#matchedPair");
-const unmatchedDialog = document.querySelector("#unmatchedPair");
-const winDialog = document.querySelector("#winDialog");
+
+//singleplayer elements
+const matchedDialogSingleplayer = document.querySelector(
+  "#matchedPairSingleplayer"
+);
+const unmatchedDialogSingleplayer = document.querySelector(
+  "#unmatchedPairSingleplayer"
+);
+const winDialogSingleplayer = document.querySelector("#winDialogSingleplayer");
+
+//multiplayer elements
+const matchedDialogMultiplayer = document.querySelector(
+  "#matchedPairMultiplayer"
+);
+const unmatchedDialogMultiplayer = document.querySelector(
+  "#unmatchedPairMultiplayer"
+);
+const winDialogMultiplayer = document.querySelector("#winDialogMultiplayer");
 
 function cardOrderShuffle() {
   for (let rep = 1; rep <= 20; rep++) {
@@ -46,6 +66,9 @@ function playGame(mode) {
   cardOrderShuffle();
   closeModeButtons();
   document.querySelector("#gameContainer").style.display = "block";
+  document.querySelectorAll(".modePara").forEach((para) => {
+    para.style.display = "none";
+  });
   cardFlip = 0;
   foundPairs = 0;
   shape1 = "";
@@ -53,6 +76,15 @@ function playGame(mode) {
   pairsSpan.textContent = foundPairs;
   playMode = mode;
   console.log(playMode);
+
+  //pairs display for each mode
+  //todo: write the pairs display for each mode
+  switch (playMode) {
+    case "singleplayer":
+      break;
+    case "multiplayer":
+      break;
+  }
 }
 
 function resetGame() {
@@ -88,14 +120,14 @@ document.querySelectorAll(".card").forEach((card) => {
           pairsSpan.textContent = foundPairs;
           if (foundPairs === 6) {
           } else {
-            matchedDialog.showModal();
+            matchedDialogSingleplayer.showModal();
           }
           closeOpenCards();
 
           checkWin();
         } else {
           closeOpenCards();
-          unmatchedDialog.showModal();
+          unmatchedDialogSingleplayer.showModal();
         }
       }, 1000);
       //matched pair cards hiding timeout function
@@ -128,14 +160,21 @@ document.querySelectorAll(".closeModal").forEach((button) => {
 });
 
 function checkWin() {
-  if (foundPairs === 6) {
-    document.querySelector("#gameContainer").style.display = "none";
-    console.log("Win! Found all pairs...");
-    winDialog.showModal();
-    document.querySelectorAll(".card").forEach((card) => {
-      card.style.visibility = "visible";
-    });
-  } else {
-    console.log("Not win yet...");
+  switch (playMode) {
+    case "singleplayer":
+      if (foundPairs === 6) {
+        document.querySelector("#gameContainer").style.display = "none";
+        console.log("Win! Found all pairs...");
+        winDialogSingleplayer.showModal();
+        document.querySelectorAll(".card").forEach((card) => {
+          card.style.visibility = "visible";
+        });
+      } else {
+        console.log("Not win yet...");
+      }
+      break;
+    case "multiplayer":
+      //todo: write this after working singleplayer multiplayer card pairs function
+      break;
   }
 }
