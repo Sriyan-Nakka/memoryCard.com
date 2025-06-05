@@ -1,5 +1,9 @@
 let cardOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
 let cardFlip = 0;
+let cardFlipP1 = 0;
+let cardFlipP2 = 0;
+
 let foundPairs = 0;
 let shape1 = "";
 let shape2 = "";
@@ -12,7 +16,14 @@ let p1Card2;
 let p2Card1;
 let p2Card2;
 
-const pairsSpan = document.querySelector("#pairsSpan");
+const foundPairsSingleplayer = document.querySelector(
+  "#foundPairsSingleplayer"
+);
+const foundPairsMultiplayer = document.querySelector("#foundPairsMultiplayer");
+
+const pairsSingleplayer = document.querySelector("#pairsSingleplayer");
+const pairsP1 = document.querySelector("#pairsP1");
+const pairsP2 = document.querySelector("#pairsP2");
 
 //singleplayer elements
 const matchedDialogSingleplayer = document.querySelector(
@@ -24,6 +35,8 @@ const unmatchedDialogSingleplayer = document.querySelector(
 const winDialogSingleplayer = document.querySelector("#winDialogSingleplayer");
 
 //multiplayer elements
+const multiplayerNames = document.querySelector("#multiplayerNames");
+
 const matchedDialogMultiplayer = document.querySelector(
   "#matchedPairMultiplayer"
 );
@@ -59,39 +72,53 @@ function closeOpenCards() {
 }
 
 function closeModeButtons() {
-  //todo: write this function
-}
-
-function playGame(mode) {
-  cardOrderShuffle();
-  closeModeButtons();
-  document.querySelector("#gameContainer").style.display = "block";
   document.querySelectorAll(".modePara").forEach((para) => {
     para.style.display = "none";
   });
-  cardFlip = 0;
-  foundPairs = 0;
-  shape1 = "";
-  shape2 = "";
-  pairsSpan.textContent = foundPairs;
+}
+
+function playGame(mode) {
   playMode = mode;
   console.log(playMode);
 
   //pairs display for each mode
-  //todo: write the pairs display for each mode
   switch (playMode) {
     case "singleplayer":
+      foundPairsSingleplayer.style.display = "inline-block";
+      foundPairsMultiplayer.style.display = "none";
       break;
     case "multiplayer":
+      multiplayerNames.showModal();
+      foundPairsMultiplayer.style.display = "inline-block";
+      foundPairsSingleplayer.style.display = "none";
       break;
   }
+
+  cardOrderShuffle();
+  closeModeButtons();
+  document.querySelector("#gameContainer").style.display = "block";
+  cardFlip = 0;
+  foundPairs = 0;
+  shape1 = "";
+  shape2 = "";
+  p1Card1 = "";
+  p1Card2 = "";
+  p2Card1 = "";
+  p2Card2 = "";
+
+  pairsSingleplayer.textContent = foundPairs;
 }
 
 function resetGame() {
   closeOpenCards();
   resetFlip();
   foundPairs = 0;
-  pairsSpan.textContent = foundPairs;
+  p1Card1 = "";
+  p1Card2 = "";
+  p2Card1 = "";
+  p2Card2 = "";
+
+  pairsSingleplayer.textContent = foundPairs;
   document.querySelectorAll(".card").forEach((card) => {
     card.style.pointerEvents = "all";
     card.style.visibility = "visible";
@@ -117,7 +144,7 @@ document.querySelectorAll(".card").forEach((card) => {
       setTimeout(() => {
         if (shape1 === shape2) {
           foundPairs++;
-          pairsSpan.textContent = foundPairs;
+          pairsSingleplayer.textContent = foundPairs;
           if (foundPairs === 6) {
           } else {
             matchedDialogSingleplayer.showModal();
@@ -143,9 +170,14 @@ document.querySelectorAll(".card").forEach((card) => {
 
 document.querySelectorAll(".closeModal").forEach((button) => {
   button.onclick = () => {
-    matchedPair.close();
-    unmatchedPair.close();
-    winDialog.close();
+    matchedDialogSingleplayer.close();
+    unmatchedDialogSingleplayer.close();
+    winDialogSingleplayer.close();
+
+    matchedDialogMultiplayer.close();
+    unmatchedDialogMultiplayer.close();
+    winDialogMultiplayer.close();
+
     cardFlip = 0;
     shape1 = "";
     shape2 = "";
@@ -154,7 +186,9 @@ document.querySelectorAll(".closeModal").forEach((button) => {
     });
     if (foundPairs === 6) {
       document.querySelector("#gameContainer").style.display = "none";
-      document.querySelector("#playButton").style.display = "inline-block";
+      document.querySelectorAll(".modePara").forEach((para) => {
+        para.style.display = "block";
+      });
     }
   };
 });

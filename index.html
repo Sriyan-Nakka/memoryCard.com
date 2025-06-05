@@ -232,7 +232,9 @@
       dialog button {
         border: 1px solid white;
       }
-      #gameContainer {
+      #gameContainer,
+      #foundPairsSingleplayer,
+      #foundPairsMultiplayer {
         display: none;
       }
     </style>
@@ -428,19 +430,25 @@
             </div>
           </div>
         </div>
-        <p id="foundPairsPara">Found Pairs: <span id="pairsSpan">0</span>/6</p>
+        <p id="foundPairsSingleplayer">
+          Found Pairs: <span id="pairsSingleplayer">0</span>/6
+        </p>
+        <p id="foundPairsMultiplayer">
+          player 1 Found Pairs: <span id="pairsP1">0</span> <br />
+          player 2 Found Pairs: <span id="pairsP2">0</span>
+        </p>
         <p id="resetBtnPara">
           <button id="resetButton" onclick="resetGame()">Reset</button>
         </p>
       </div>
 
       <!-- dialogs -->
-      <dialog id="matchedPair">
+      <dialog id="matchedPairSingleplayer">
         <p class="modalPara">Your selected cards were a matching pair!</p>
         <p class="modalPara"><button class="closeModal">Continue</button></p>
       </dialog>
 
-      <dialog id="unmatchedPair">
+      <dialog id="unmatchedPairSingleplayer">
         <p class="modalPara">Your selected cards were not a matching pair...</p>
         <p class="modalPara"><button class="closeModal">Continue</button></p>
       </dialog>
@@ -473,6 +481,10 @@
         </p>
         <p><button class="closeModal">Continue</button></p>
       </dialog>
+
+      <dialog id="multiplayerNames">
+        <!-- todo: write this -->
+      </dialog>
     </main>
     <hr id="footerHr" />
     <footer>
@@ -503,7 +515,7 @@
         </a>
         <br />
         &copy; Copyright, Sai Sriyan Nakka 2025, All Rights Reserved.
-        <br />Version 1.04 <br />
+        <br />Version 1.05 <br />
       </center>
     </footer>
   </body>
