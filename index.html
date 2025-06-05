@@ -237,6 +237,24 @@
       #foundPairsMultiplayer {
         display: none;
       }
+      input {
+        font-size: 1.15rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: all 0.15s ease-in-out;
+        border: 2px solid black;
+      }
+      input:focus {
+        border: none;
+        outline: 2.5px solid gray;
+      }
+      dialog h2 {
+        margin-top: 0px;
+        text-decoration: underline;
+      }
+      h3{
+        margin: 0px;
+      }
     </style>
   </head>
   <body>
@@ -434,8 +452,10 @@
           Found Pairs: <span id="pairsSingleplayer">0</span>/6
         </p>
         <p id="foundPairsMultiplayer">
-          player 1 Found Pairs: <span id="pairsP1">0</span> <br />
-          player 2 Found Pairs: <span id="pairsP2">0</span>
+          <h3><u>Pairs Found:</u></h3>
+          <span id="p1Name">player 1</span>: <span id="pairsP1">0</span> <br />
+          <span id="p2Name">player 2</span>:
+          <span id="pairsP2">0</span>
         </p>
         <p id="resetBtnPara">
           <button id="resetButton" onclick="resetGame()">Reset</button>
@@ -483,7 +503,18 @@
       </dialog>
 
       <dialog id="multiplayerNames">
-        <!-- todo: write this -->
+        <h2>Multiplayer Mode Names:</h2>
+        <form onsubmit="multiplayerNamesSubmit(event)">
+          <p>
+            Enter player 1 Name:
+            <input id="enteredP1Name" type="text" required />
+          </p>
+          <p>
+            Enter player 2 Name:
+            <input id="enteredP2Name" type="text" required />
+          </p>
+          <button id="submitNames" type="submit">Start Game</button>
+        </form>
       </dialog>
     </main>
     <hr id="footerHr" />
@@ -515,7 +546,7 @@
         </a>
         <br />
         &copy; Copyright, Sai Sriyan Nakka 2025, All Rights Reserved.
-        <br />Version 1.05 <br />
+        <br />Version 1.06 <br />
       </center>
     </footer>
   </body>

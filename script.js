@@ -5,6 +5,9 @@ let cardFlipP1 = 0;
 let cardFlipP2 = 0;
 
 let foundPairs = 0;
+let p1FoundPairs = 0;
+let p2FoundPairs = 0;
+
 let shape1 = "";
 let shape2 = "";
 let pickedCard1;
@@ -65,6 +68,15 @@ function resetFlip() {
   cardFlip = 0;
 }
 
+function multiplayerNamesSubmit(e) {
+  e.preventDefault();
+  multiplayerNames.close();
+  document.querySelector("#p1Name").textContent =
+    document.querySelector("#enteredP1Name").value;
+  document.querySelector("#p2Name").textContent =
+    document.querySelector("#enteredP2Name").value;
+}
+
 function closeOpenCards() {
   document.querySelectorAll(".card").forEach((card) => {
     card.classList.remove("cardReveal");
@@ -81,7 +93,6 @@ function playGame(mode) {
   playMode = mode;
   console.log(playMode);
 
-  //pairs display for each mode
   switch (playMode) {
     case "singleplayer":
       foundPairsSingleplayer.style.display = "inline-block";
@@ -99,8 +110,12 @@ function playGame(mode) {
   document.querySelector("#gameContainer").style.display = "block";
   cardFlip = 0;
   foundPairs = 0;
+  p1FoundPairs = 0;
+  p2FoundPairs = 0;
+
   shape1 = "";
   shape2 = "";
+
   p1Card1 = "";
   p1Card2 = "";
   p2Card1 = "";
@@ -113,6 +128,9 @@ function resetGame() {
   closeOpenCards();
   resetFlip();
   foundPairs = 0;
+  p1FoundPairs = 0;
+  p2FoundPairs = 0;
+
   p1Card1 = "";
   p1Card2 = "";
   p2Card1 = "";
