@@ -266,6 +266,12 @@
       #turnName {
         font-weight: bold;
       }
+      .resultModalPara {
+        margin: 15px;
+      }
+      #resultsDialog h2 {
+        margin: 7px;
+      }
     </style>
   </head>
   <body>
@@ -510,11 +516,17 @@
         <p><button class="closeModal">Continue</button></p>
       </dialog>
 
-      <dialog id="winDialogMultiplayer">
-        <p>
-          Congratulations, <span id="winnerName">player</span> found the most
-          pairs!
+      <dialog id="resultsDialog">
+        <h2><u> Results: </u></h2>
+        <p class="resultModalPara">
+          <span id="p1resultName">p1</span>: <span id="p1ResultPairs">0</span>
         </p>
+        <p class="resultModalPara">
+          <span id="p2resultName">p2</span>: <span id="p2ResultPairs">0</span>
+        </p>
+        <b>
+          <p id="results">Result</p>
+        </b>
         <p><button class="closeModal">Continue</button></p>
       </dialog>
 
@@ -562,7 +574,7 @@
         </a>
         <br />
         &copy; Copyright, Sai Sriyan Nakka 2025, All Rights Reserved.
-        <br />Version 1.09 <br />
+        <br />Version 1.1 <br />
       </center>
     </footer>
   </body>

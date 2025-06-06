@@ -44,7 +44,7 @@ const matchedDialogMultiplayer = document.querySelector(
 const unmatchedDialogMultiplayer = document.querySelector(
   "#unmatchedPairMultiplayer"
 );
-const winDialogMultiplayer = document.querySelector("#winDialogMultiplayer");
+const resultsDialog = document.querySelector("#resultsDialog");
 
 function cardOrderShuffle() {
   for (let rep = 1; rep <= 20; rep++) {
@@ -77,6 +77,9 @@ function multiplayerNamesSubmit(e) {
   turnName.textContent = document.querySelector("#enteredP1Name").value;
   foundPairsMultiplayer.style.display = "inline-block";
   foundPairsSingleplayer.style.display = "none";
+
+  document.querySelector("#enteredP1Name").value = "";
+  document.querySelector("#enteredP2Name").value = "";
 }
 
 function closeOpenCards() {
@@ -95,6 +98,11 @@ function playGame(mode) {
   playMode = mode;
   console.log(playMode);
 
+  foundPairsMultiplayer.style.display = "none";
+  document.querySelector("#p1Name").textContent = "";
+  document.querySelector("#p2Name").textContent = "";
+  document.querySelector("#turnNameDiv").style.display = "none";
+
   switch (playMode) {
     case "singleplayer":
       document.querySelector("#turnNameDiv").style.display = "none";
@@ -104,21 +112,24 @@ function playGame(mode) {
     case "multiplayer":
       p1Turn = true;
       multiplayerNames.showModal();
+
+      p1FoundPairs = 0;
+      p2FoundPairs = 0;
+
+      pairsP1.textContent = p1FoundPairs;
+      pairsP2.textContent = p2FoundPairs;
       break;
   }
+
+  foundPairs = 0;
+  pairsSingleplayer.textContent = foundPairs;
 
   cardOrderShuffle();
   closeModeButtons();
   document.querySelector("#gameContainer").style.display = "block";
   cardFlip = 0;
-  foundPairs = 0;
-  p1FoundPairs = 0;
-  p2FoundPairs = 0;
-
   shape1 = "";
   shape2 = "";
-
-  pairsSingleplayer.textContent = foundPairs;
 }
 
 function resetGame() {
@@ -130,11 +141,6 @@ function resetGame() {
 
   pairsP1.textContent = p1FoundPairs;
   pairsP2.textContent = p2FoundPairs;
-
-  p1Card1 = "";
-  p1Card2 = "";
-  p2Card1 = "";
-  p2Card2 = "";
 
   p1Turn = true;
   turnName.textContent = p1Name.textContent;
@@ -297,7 +303,7 @@ document.querySelectorAll(".closeModal").forEach((button) => {
 
     matchedDialogMultiplayer.close();
     unmatchedDialogMultiplayer.close();
-    winDialogMultiplayer.close();
+    resultsDialog.close();
 
     cardFlip = 0;
     shape1 = "";
@@ -329,9 +335,30 @@ function checkWin() {
       }
       break;
     case "multiplayer":
-      //todo: write this after working singleplayer multiplayer card pairs function
       if (foundPairs === 6) {
-        winDialogMultiplayer.showModal();
+        document.querySelector("#gameContainer").style.display = "none";
+        document.querySelector("#p1resultName").textContent =
+          p1Name.textContent;
+        document.querySelector("#p2resultName").textContent =
+          p2Name.textContent;
+        document.querySelector("#p1ResultPairs").textContent = p1FoundPairs;
+        document.querySelector("#p2ResultPairs").textContent = p2FoundPairs;
+
+        if (p1FoundPairs > p2FoundPairs) {
+          document.querySelector(
+            "#results"
+          ).textContent = `${p1Name.textContent} found the most pairs!`;
+        } else if (p1FoundPairs < p2FoundPairs) {
+          document.querySelector(
+            "#results"
+          ).textContent = `${p2Name.textContent} found the most pairs!`;
+        } else if (p1FoundPairs === p2FoundPairs) {
+          document.querySelector("#results").textContent = `It is a draw!`;
+        }
+        resultsDialog.showModal();
+        document.querySelectorAll(".card").forEach((card) => {
+          card.style.visibility = "visible";
+        });
       }
       break;
   }
