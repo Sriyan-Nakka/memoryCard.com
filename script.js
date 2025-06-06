@@ -14,10 +14,8 @@ let pickedCard1;
 let pickedCard2;
 let playMode = "";
 
-let p1Card1;
-let p1Card2;
-let p2Card1;
-let p2Card2;
+let p1Turn = true;
+let turnName = document.querySelector("#turnName");
 
 const foundPairsSingleplayer = document.querySelector(
   "#foundPairsSingleplayer"
@@ -75,6 +73,10 @@ function multiplayerNamesSubmit(e) {
     document.querySelector("#enteredP1Name").value;
   document.querySelector("#p2Name").textContent =
     document.querySelector("#enteredP2Name").value;
+  document.querySelector("#turnNameDiv").style.display = "block";
+  turnName.textContent = document.querySelector("#enteredP1Name").value;
+  foundPairsMultiplayer.style.display = "inline-block";
+  foundPairsSingleplayer.style.display = "none";
 }
 
 function closeOpenCards() {
@@ -95,13 +97,13 @@ function playGame(mode) {
 
   switch (playMode) {
     case "singleplayer":
+      document.querySelector("#turnNameDiv").style.display = "none";
       foundPairsSingleplayer.style.display = "inline-block";
       foundPairsMultiplayer.style.display = "none";
       break;
     case "multiplayer":
+      p1Turn = true;
       multiplayerNames.showModal();
-      foundPairsMultiplayer.style.display = "inline-block";
-      foundPairsSingleplayer.style.display = "none";
       break;
   }
 
@@ -116,26 +118,28 @@ function playGame(mode) {
   shape1 = "";
   shape2 = "";
 
-  p1Card1 = "";
-  p1Card2 = "";
-  p2Card1 = "";
-  p2Card2 = "";
-
   pairsSingleplayer.textContent = foundPairs;
 }
 
 function resetGame() {
+  cardOrderShuffle();
   closeOpenCards();
   resetFlip();
-  foundPairs = 0;
   p1FoundPairs = 0;
   p2FoundPairs = 0;
+
+  pairsP1.textContent = p1FoundPairs;
+  pairsP2.textContent = p2FoundPairs;
 
   p1Card1 = "";
   p1Card2 = "";
   p2Card1 = "";
   p2Card2 = "";
 
+  p1Turn = true;
+  turnName.textContent = p1Name.textContent;
+
+  foundPairs = 0;
   pairsSingleplayer.textContent = foundPairs;
   document.querySelectorAll(".card").forEach((card) => {
     card.style.pointerEvents = "all";
@@ -148,40 +152,139 @@ document.querySelectorAll(".card").forEach((card) => {
     card.classList.toggle("cardReveal");
     card.style.pointerEvents = "none";
     console.log(card.dataset.shape);
-    cardFlip++;
-    if (cardFlip === 1) {
-      pickedCard1 = card;
-      shape1 = card.dataset.shape;
-    } else if (cardFlip === 2) {
-      pickedCard2 = card;
-      shape2 = card.dataset.shape;
-      document.querySelectorAll(".card").forEach((card) => {
-        card.style.pointerEvents = "none";
-      });
-      //pair matched dialog timeout function
-      setTimeout(() => {
-        if (shape1 === shape2) {
-          foundPairs++;
-          pairsSingleplayer.textContent = foundPairs;
-          if (foundPairs === 6) {
-          } else {
-            matchedDialogSingleplayer.showModal();
-          }
-          closeOpenCards();
+    switch (playMode) {
+      case "singleplayer":
+        cardFlip++;
+        if (cardFlip === 1) {
+          pickedCard1 = card;
+          shape1 = card.dataset.shape;
+        } else if (cardFlip === 2) {
+          pickedCard2 = card;
+          shape2 = card.dataset.shape;
+          document.querySelectorAll(".card").forEach((card) => {
+            card.style.pointerEvents = "none";
+          });
+          //pair matched dialog timeout function
+          setTimeout(() => {
+            if (shape1 === shape2) {
+              foundPairs++;
+              pairsSingleplayer.textContent = foundPairs;
+              if (foundPairs === 6) {
+              } else {
+                matchedDialogSingleplayer.showModal();
+              }
+              closeOpenCards();
 
-          checkWin();
-        } else {
-          closeOpenCards();
-          unmatchedDialogSingleplayer.showModal();
+              checkWin();
+            } else {
+              closeOpenCards();
+              unmatchedDialogSingleplayer.showModal();
+            }
+          }, 1000);
+          //matched pair cards hiding timeout function
+          setTimeout(() => {
+            if (shape1 === shape2) {
+              pickedCard1.style.visibility = "hidden";
+              pickedCard2.style.visibility = "hidden";
+            }
+          }, 250);
         }
-      }, 1000);
-      //matched pair cards hiding timeout function
-      setTimeout(() => {
-        if (shape1 === shape2) {
-          pickedCard1.style.visibility = "hidden";
-          pickedCard2.style.visibility = "hidden";
+        break;
+      case "multiplayer":
+        if (p1Turn) {
+          cardFlipP1++;
+          if (cardFlipP1 === 1) {
+            shape1 = card.dataset.shape;
+            pickedCard1 = card;
+          } else if (cardFlipP1 === 2) {
+            cardFlipP1 = 0;
+            shape2 = card.dataset.shape;
+            pickedCard2 = card;
+            document.querySelectorAll(".card").forEach((card) => {
+              card.style.pointerEvents = "none";
+            });
+            //pair matched dialog timeout function
+            setTimeout(() => {
+              turnName.textContent = p2Name.textContent;
+
+              if (shape1 === shape2) {
+                foundPairs++;
+                p1FoundPairs++;
+                pairsP1.textContent = p1FoundPairs;
+                if (foundPairs === 6) {
+                } else {
+                  document.querySelector("#matchedPlayerName").textContent =
+                    p1Name.textContent;
+                  matchedDialogMultiplayer.showModal();
+                }
+                closeOpenCards();
+
+                checkWin();
+              } else {
+                closeOpenCards();
+                document.querySelector("#unmatchedPlayerName").textContent =
+                  p1Name.textContent;
+                unmatchedDialogMultiplayer.showModal();
+              }
+            }, 1000);
+            //matched pair cards hiding timeout function
+            setTimeout(() => {
+              if (shape1 === shape2) {
+                pickedCard1.style.visibility = "hidden";
+                pickedCard2.style.visibility = "hidden";
+              }
+            }, 250);
+
+            p1Turn = false;
+          }
+        } else if (!p1Turn) {
+          cardFlipP2++;
+          if (cardFlipP2 === 1) {
+            shape1 = card.dataset.shape;
+            pickedCard1 = card;
+          } else if (cardFlipP2 === 2) {
+            cardFlipP2 = 0;
+            shape2 = card.dataset.shape;
+            pickedCard2 = card;
+            document.querySelectorAll(".card").forEach((card) => {
+              card.style.pointerEvents = "none";
+            });
+            //pair matched dialog timeout function
+            setTimeout(() => {
+              turnName.textContent = p1Name.textContent;
+
+              if (shape1 === shape2) {
+                foundPairs++;
+                p2FoundPairs++;
+                pairsP2.textContent = p2FoundPairs;
+                if (foundPairs === 6) {
+                } else {
+                  document.querySelector("#matchedPlayerName").textContent =
+                    p2Name.textContent;
+                  matchedDialogMultiplayer.showModal();
+                }
+                closeOpenCards();
+
+                checkWin();
+              } else {
+                closeOpenCards();
+                document.querySelector("#unmatchedPlayerName").textContent =
+                  p2Name.textContent;
+                unmatchedDialogMultiplayer.showModal();
+              }
+            }, 1000);
+            //matched pair cards hiding timeout function
+            setTimeout(() => {
+              if (shape1 === shape2) {
+                pickedCard1.style.visibility = "hidden";
+                pickedCard2.style.visibility = "hidden";
+              }
+            }, 250);
+
+            p1Turn = true;
+          }
         }
-      }, 250);
+        break;
     }
   });
 });
@@ -227,6 +330,9 @@ function checkWin() {
       break;
     case "multiplayer":
       //todo: write this after working singleplayer multiplayer card pairs function
+      if (foundPairs === 6) {
+        winDialogMultiplayer.showModal();
+      }
       break;
   }
 }

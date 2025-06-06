@@ -234,7 +234,8 @@
       }
       #gameContainer,
       #foundPairsSingleplayer,
-      #foundPairsMultiplayer {
+      #foundPairsMultiplayer,
+      #turnNameDiv {
         display: none;
       }
       input {
@@ -252,8 +253,18 @@
         margin-top: 0px;
         text-decoration: underline;
       }
-      h3{
+      h3 {
         margin: 0px;
+      }
+      #resetDiv {
+        margin-top: 10px;
+      }
+      #foundPairsSingleplayer {
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+      #turnName {
+        font-weight: bold;
       }
     </style>
   </head>
@@ -290,6 +301,9 @@
       </p>
 
       <div id="gameContainer">
+        <div id="turnNameDiv">
+          <u><span id="turnName">Player</span>'s Turn</u>
+        </div>
         <div id="cards">
           <!-- circle -->
           <div class="card" id="card1" data-shape="circle">
@@ -451,15 +465,17 @@
         <p id="foundPairsSingleplayer">
           Found Pairs: <span id="pairsSingleplayer">0</span>/6
         </p>
-        <p id="foundPairsMultiplayer">
+        <div id="foundPairsMultiplayer">
           <h3><u>Pairs Found:</u></h3>
           <span id="p1Name">player 1</span>: <span id="pairsP1">0</span> <br />
           <span id="p2Name">player 2</span>:
           <span id="pairsP2">0</span>
-        </p>
-        <p id="resetBtnPara">
-          <button id="resetButton" onclick="resetGame()">Reset</button>
-        </p>
+        </div>
+        <div id="resetDiv">
+          <p id="resetBtnPara">
+            <button id="resetButton" onclick="resetGame()">Reset</button>
+          </p>
+        </div>
       </div>
 
       <!-- dialogs -->
@@ -546,7 +562,7 @@
         </a>
         <br />
         &copy; Copyright, Sai Sriyan Nakka 2025, All Rights Reserved.
-        <br />Version 1.06 <br />
+        <br />Version 1.09 <br />
       </center>
     </footer>
   </body>
